@@ -1,9 +1,6 @@
 package com.demo_h2_database;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class CarEntity {
@@ -12,14 +9,15 @@ public class CarEntity {
     private Long id;
     private String manufacturer;
     private String model;
-    private Integer year;
+
+    @Column(name = "year_of_manufacture")
+    private Integer yearOfManufacture;
 
 
-    public CarEntity(Long id, String manufacturer, String model, Integer year) {
-        this.id = id;
+    public CarEntity(String manufacturer, String model, Integer yearOfManufacture) {
         this.manufacturer = manufacturer;
         this.model = model;
-        this.year = year;
+        this.yearOfManufacture = yearOfManufacture;
     }
 
     public CarEntity() {
@@ -50,11 +48,11 @@ public class CarEntity {
     }
 
     public Integer getYear() {
-        return year;
+        return yearOfManufacture;
     }
 
     public void setYear(Integer year) {
-        this.year = year;
+        this.yearOfManufacture = year;
     }
 
     @Override
@@ -63,7 +61,7 @@ public class CarEntity {
                 "id=" + id +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", model='" + model + '\'' +
-                ", year=" + year +
+                ", year=" + yearOfManufacture +
                 '}';
     }
 }
