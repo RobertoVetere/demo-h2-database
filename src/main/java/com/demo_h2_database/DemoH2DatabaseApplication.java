@@ -1,4 +1,4 @@
-package com.demo_h2_database.demo_h2_database;
+package com.demo_h2_database;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
