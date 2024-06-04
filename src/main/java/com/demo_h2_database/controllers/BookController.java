@@ -1,11 +1,20 @@
 package com.demo_h2_database.controllers;
 
+import com.demo_h2_database.entities.Book;
+import com.demo_h2_database.repositories.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@RequestMapping(value = "/api")
 public class BookController {
+
+    @Autowired
+    BookRepository bookRepository;
     @GetMapping(value = "/bootstrap")
     public String bootstrap(){
         return """
@@ -23,6 +32,15 @@ public class BookController {
                   </body>
                 </html>
                 """;
+    }
+
+    /**
+     * http://localhost:8080/api/books
+     * @return a list of books
+     */
+    @GetMapping(value = "/books")
+    public List<Book> findAll(){
+        return bookRepository.findAll();
     }
 
 }
