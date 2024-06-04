@@ -3,11 +3,14 @@ package com.demo_h2_database.controllers;
 import com.demo_h2_database.entities.Book;
 import com.demo_h2_database.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -43,4 +46,24 @@ public class BookController {
         return bookRepository.findAll();
     }
 
+    /**
+     * Busca un libro por su ID.
+     *
+     * @param id El ID del libro a buscar.
+     * @return ResponseEntity con el libro encontrado o un 404 si no se encuentra.
+     *
+     * Este método maneja una solicitud GET en la ruta "/book/{id}".
+     * Utiliza el repositorio de libros para buscar un libro por su ID.
+     * Si se encuentra el libro, se devuelve con un estado HTTP 200.
+     * Si no se encuentra, se devuelve un estado HTTP 404.
+     */
+    @GetMapping(value = "/book/{id}")
+    public ResponseEntity<Book> findById(@PathVariable Long id){
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        return bookOptional
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity
+                        .notFound()
+                        .build());
+    }
 }
