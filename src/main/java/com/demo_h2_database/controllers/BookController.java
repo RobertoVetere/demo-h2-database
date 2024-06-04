@@ -1,5 +1,6 @@
 package com.demo_h2_database.controllers;
 
+import com.demo_h2_database.api_response.ApiResponse;
 import com.demo_h2_database.entities.Book;
 import com.demo_h2_database.repositories.BookRepository;
 import com.demo_h2_database.services.BookService;
@@ -67,7 +68,7 @@ public class BookController {
      * @return el libro creado
      */
     @PostMapping("/create-book")
-    public Book create(@RequestBody Book book){
+    public ResponseEntity<ApiResponse> create(@RequestBody Book book){
         return bookService.save(book);
     }
 }
