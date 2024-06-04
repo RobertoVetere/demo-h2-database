@@ -2,12 +2,10 @@ package com.demo_h2_database.controllers;
 
 import com.demo_h2_database.entities.Book;
 import com.demo_h2_database.repositories.BookRepository;
+import com.demo_h2_database.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +15,8 @@ import java.util.Optional;
 public class BookController {
 
     @Autowired
-    BookRepository bookRepository;
+    BookService bookService;
+
     @GetMapping(value = "/bootstrap")
     public String bootstrap(){
         return """
@@ -39,11 +38,11 @@ public class BookController {
 
     /**
      * http://localhost:8080/api/books
-     * @return a list of books
+     * @return una lista de libros
      */
     @GetMapping(value = "/books")
     public List<Book> findAll(){
-        return bookRepository.findAll();
+        return bookService.findAll();
     }
 
     /**
@@ -59,11 +58,17 @@ public class BookController {
      */
     @GetMapping(value = "/book/{id}")
     public ResponseEntity<Book> findById(@PathVariable Long id){
-        Optional<Book> bookOptional = bookRepository.findById(id);
-        return bookOptional
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity
-                        .notFound()
-                        .build());
+        return bookService.findById(id);
+    }
+
+    /**
+     *
+     * @param book
+     * @return el libro creado
+     */
+    @PostMapping("/create-book")
+    public Book create(@RequestBody Book book){
+        return bookService.save(book);
     }
 }
+
