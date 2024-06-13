@@ -1,8 +1,6 @@
 package com.demo_h2_database.controllers;
-
 import com.demo_h2_database.api_response.ApiResponse;
 import com.demo_h2_database.entities.Book;
-import com.demo_h2_database.repositories.BookRepository;
 import com.demo_h2_database.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
